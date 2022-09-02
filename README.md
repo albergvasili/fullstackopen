@@ -3,3 +3,4 @@ These are the exercises of the Full Stack open course by the University of Helsi
 
 ## Parts
 * Part 0: Fundamentals of Web apps
+* Part 1: Introduction to Ract
