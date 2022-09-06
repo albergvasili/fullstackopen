@@ -20,6 +20,7 @@ const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+
   
   const handleGoodClick = () => {
     setGood(good + 1)
@@ -33,6 +34,10 @@ const App = () => {
     setBad(bad + 1)
   };
 
+  const totalFeedback = good + neutral + bad;
+
+  
+
   return (
     <div>
       <Title text='Give Feedback' />
@@ -43,6 +48,8 @@ const App = () => {
         <Statistic text='good' counter={good} />
         <Statistic text='neutral' counter={neutral} />
         <Statistic text='bad' counter={bad} />
+        <Statistic text='total' counter={totalFeedback} />
+
 
     </div>
   )
