@@ -38,6 +38,8 @@ const App = () => {
 
   const average = (good*1 + neutral*0 + bad*-1)/totalFeedback;
 
+  const positive = `${good/totalFeedback*100} %`;
+
   return (
     <div>
       <Title text='Give Feedback' />
@@ -50,6 +52,7 @@ const App = () => {
         <Statistic text='bad' counter={bad} />
         <Statistic text='total' counter={totalFeedback} />
         <Statistic text='average' counter={average} />
+        <Statistic text='positive' counter={positive} />
     </div>
   )
 }
