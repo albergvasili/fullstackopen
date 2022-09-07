@@ -40,6 +40,19 @@ const App = () => {
 
   const positive = `${good/totalFeedback*100} %`;
 
+  if (totalFeedback === 0) {
+    return (
+      <div>
+        <Title text='Give Feedback' />
+          <Button onClick={handleGoodClick} label='good' />
+          <Button onClick={handleNeutralClick} label='neutral' />
+          <Button onClick={handleBadClick} label='bad' />
+        <Title text='Statistics' />
+        <p> No feedback given </p>
+      </div>
+    )
+  }
+
   return (
     <div>
       <Title text='Give Feedback' />
@@ -55,6 +68,6 @@ const App = () => {
         <Statistic text='positive' counter={positive} />
     </div>
   )
-}
+};
 
 export default App;
