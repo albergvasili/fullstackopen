@@ -11,46 +11,55 @@ const Button = (props) => {
 };
 
 const Statistics = (props) => {
-
 };
 
 const StatisticLine = (props) => {
   return (
-    <p>{props.text} {props.counter}</p>
+    <p>{props.text} {props.value}</p>
   )
 };
 
 const App = () => {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
+  const [clicks, setClicks] = useState({
+    good: 0, neutral: 0, bad: 0, total: 0
+  });
 
   
-  const handleGoodClick = () => {
-    setGood(good + 1)
+  const handleGoodClicks = () => {
+    setClicks({
+      ...clicks,
+      good: clicks.good + 1,
+      total: clicks.total + 1
+    })
   };
 
-  const handleNeutralClick = () => {
-    setNeutral(neutral + 1)
+  const handleNeutralClicks = () => {
+    setClicks({
+      ...clicks,
+      neutral: clicks.neutral + 1,
+      total: clicks.total + 1
+    })
   };
 
-  const handleBadClick = () => {
-    setBad(bad + 1)
+  const handleBadClicks = () => {
+    setClicks({
+      ...clicks,
+      bad: clicks.bad + 1,
+      total: clicks.total + 1
+    })
   };
 
-  const totalFeedback = good + neutral + bad;
+  const average = (clicks.good*1 + clicks.neutral*0 + clicks.bad*-1)/clicks.total;
 
-  const average = (good*1 + neutral*0 + bad*-1)/totalFeedback;
+  const positive = `${clicks.good/clicks.total*100} %`;
 
-  const positive = `${good/totalFeedback*100} %`;
-
-  if (totalFeedback === 0) {
+  if (clicks.total === 0) {
     return (
       <div>
         <Title text='Give Feedback' />
-          <Button onClick={handleGoodClick} label='good' />
-          <Button onClick={handleNeutralClick} label='neutral' />
-          <Button onClick={handleBadClick} label='bad' />
+          <Button onClick={handleGoodClicks} label='good' />
+          <Button onClick={handleNeutralClicks} label='neutral' />
+          <Button onClick={handleBadClicks} label='bad' />
         <Title text='Statistics' />
         <p> No feedback given </p>
       </div>
@@ -60,16 +69,16 @@ const App = () => {
   return (
     <div>
       <Title text='Give Feedback' />
-        <Button onClick={handleGoodClick} label='good' />
-        <Button onClick={handleNeutralClick} label='neutral' />
-        <Button onClick={handleBadClick} label='bad' />
+        <Button onClick={handleGoodClicks} label='good' />
+        <Button onClick={handleNeutralClicks} label='neutral' />
+        <Button onClick={handleBadClicks} label='bad' />
       <Title text='Statistics' />
-        <StatisticLine text='good' counter={good} />
-        <StatisticLine text='neutral' counter={neutral} />
-        <StatisticLine text='bad' counter={bad} />
-        <StatisticLine text='total' counter={totalFeedback} />
-        <StatisticLine text='average' counter={average} />
-        <StatisticLine text='positive' counter={positive} />
+        <StatisticLine text='good' value={clicks.good} />
+        <StatisticLine text='neutral' value={clicks.neutral} />
+        <StatisticLine text='bad' value={clicks.bad} />
+        <StatisticLine text='total' value={clicks.total} />
+        <StatisticLine text='average' value={average} />
+        <StatisticLine text='positive' value={positive} />
     </div>
   )
 };
