@@ -17,13 +17,24 @@ const App = () => {
     "In the end, everything is just furniture."
   ];
 
+  const voteList = new Array(anecdotes.length).fill(0);
+
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(voteList);
 
   const random = () => Math.floor(Math.random() * anecdotes.length);
+
+  const addVote = () => {
+    const copyVotes = [...votes];
+    copyVotes[selected] += 1
+    setVotes(copyVotes)
+  };
 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected]} votes</p>
+      <Button onClick={addVote} text="vote" />
       <Button onClick={() => setSelected(random)} text="Next anecdote" />
     </div>
   )
