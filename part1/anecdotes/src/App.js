@@ -2,7 +2,7 @@ import {useState } from 'react';
 
 const Button = (props) => {
   return (
-    <button>{props.text}</button>
+    <button onClick={props.onClick}>{props.text}</button>
   )
 };
 
@@ -19,10 +19,12 @@ const App = () => {
 
   const [selected, setSelected] = useState(0);
 
+  const random = () => Math.floor(Math.random() * anecdotes.length);
+
   return (
     <div>
       <p>{anecdotes[selected]}</p>
-      <Button text="Next anecdote" />
+      <Button onClick={() => setSelected(random)} text="Next anecdote" />
     </div>
   )
 };
