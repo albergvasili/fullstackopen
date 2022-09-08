@@ -1,5 +1,11 @@
 import {useState } from 'react';
 
+const Button = (props) => {
+  return (
+    <button>{props.text}</button>
+  )
+};
+
 const App = () => {
   const anecdotes = [
     "Every now and then the other one suffers.",
@@ -15,7 +21,8 @@ const App = () => {
 
   return (
     <div>
-      {anecdotes[selected]}
+      <p>{anecdotes[selected]}</p>
+      <Button text="Next anecdote" />
     </div>
   )
 };
