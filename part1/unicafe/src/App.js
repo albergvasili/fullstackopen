@@ -10,12 +10,26 @@ const Button = (props) => {
   )
 };
 
-const Statistics = (props) => {
-};
-
 const StatisticLine = (props) => {
   return (
     <p>{props.text} {props.value}</p>
+  )
+};
+
+const Statistics = ({clicks}) => {
+  const avg = (clicks.good*1 + clicks.neutral*0 + clicks.bad*-1)/clicks.total;
+
+  const positive = `${clicks.good/clicks.total*100} %`;
+
+  return (
+  <div>
+    <StatisticLine text='good' value={clicks.good} />
+    <StatisticLine text='neutral' value={clicks.neutral} />
+    <StatisticLine text='bad' value={clicks.bad} />
+    <StatisticLine text='total' value={clicks.total} />
+    <StatisticLine text='average' value={avg} />
+    <StatisticLine text='positive' value={positive} />
+  </div>
   )
 };
 
@@ -49,9 +63,6 @@ const App = () => {
     })
   };
 
-  const average = (clicks.good*1 + clicks.neutral*0 + clicks.bad*-1)/clicks.total;
-
-  const positive = `${clicks.good/clicks.total*100} %`;
 
   if (clicks.total === 0) {
     return (
@@ -73,12 +84,7 @@ const App = () => {
         <Button onClick={handleNeutralClicks} label='neutral' />
         <Button onClick={handleBadClicks} label='bad' />
       <Title text='Statistics' />
-        <StatisticLine text='good' value={clicks.good} />
-        <StatisticLine text='neutral' value={clicks.neutral} />
-        <StatisticLine text='bad' value={clicks.bad} />
-        <StatisticLine text='total' value={clicks.total} />
-        <StatisticLine text='average' value={average} />
-        <StatisticLine text='positive' value={positive} />
+      <Statistics clicks={clicks} />
     </div>
   )
 };
