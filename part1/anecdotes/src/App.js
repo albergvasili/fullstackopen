@@ -6,6 +6,15 @@ const Header = (props) => {
   )
 };
 
+const Anecdote = ({anecdotes, votes}) => {
+  return (
+   <>
+      <p>{anecdotes}</p>
+      <p>has {votes} votes</p>
+   </>
+  )
+};
+
 const Button = (props) => {
   return (
     <button onClick={props.onClick}>{props.text}</button>
@@ -39,8 +48,7 @@ const App = () => {
   return (
     <div>
       <Header text="Anecdote of the day" />
-      <p>{anecdotes[selected]}</p>
-      <p>has {votes[selected]} votes</p>
+      <Anecdote anecdotes={anecdotes[selected]} votes={votes[selected]} />
       <Button onClick={addVote} text="vote" />
       <Button onClick={() => setSelected(random)} text="Next anecdote" />
       <Header text="Anecdote with most votes" />
