@@ -1,5 +1,11 @@
 import {useState } from 'react';
 
+const Header = (props) => {
+  return (
+    <h2>{props.text}</h2>
+  )
+};
+
 const Button = (props) => {
   return (
     <button onClick={props.onClick}>{props.text}</button>
@@ -32,10 +38,12 @@ const App = () => {
 
   return (
     <div>
+      <Header text="Anecdote of the day" />
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <Button onClick={addVote} text="vote" />
       <Button onClick={() => setSelected(random)} text="Next anecdote" />
+      <Header text="Anecdote with most votes" />
     </div>
   )
 };
