@@ -21,8 +21,13 @@ const StatisticLine = (props) => {
 
 const Statistics = ({clicks}) => {
   const avg = (clicks.good*1 + clicks.neutral*0 + clicks.bad*-1)/clicks.total;
-
   const positive = `${clicks.good/clicks.total*100} %`;
+
+  if (clicks.total === 0) {
+    return (
+      <p> No feedback given </p>
+    )
+  }
 
   return (
   <table>
@@ -68,8 +73,6 @@ const App = () => {
     })
   };
 
-
-  if (clicks.total === 0) {
     return (
       <div>
         <Title text='Give Feedback' />
@@ -77,21 +80,9 @@ const App = () => {
           <Button onClick={handleNeutralClicks} label='neutral' />
           <Button onClick={handleBadClicks} label='bad' />
         <Title text='Statistics' />
-        <p> No feedback given </p>
+        <Statistics clicks={clicks} />
       </div>
     )
-  }
-
-  return (
-    <div>
-      <Title text='Give Feedback' />
-        <Button onClick={handleGoodClicks} label='good' />
-        <Button onClick={handleNeutralClicks} label='neutral' />
-        <Button onClick={handleBadClicks} label='bad' />
-      <Title text='Statistics' />
-      <Statistics clicks={clicks} />
-    </div>
-  )
 };
 
 export default App;
