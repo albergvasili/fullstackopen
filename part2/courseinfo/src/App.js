@@ -1,13 +1,13 @@
-const Header = (props) => {
+const Header = ({ title }) => {
   return (
-    <h1>{props.title}</h1>
+    <h2>{title}</h2>
   )
 };
 
-const Part = (props) => {
+const Part = ({ part }) => {
   return (
       <p>
-        {props.part.name} {props.part.exercises}
+        {part.name} {part.exercises}
       </p>
   )
 };
@@ -31,7 +31,9 @@ const Total = ({ parts }) => {
 
   return (
     <p>
-      Number of exercises {sum}
+      <strong>
+        Number of exercises {sum}
+      </strong>
     </p>
   )
 };
@@ -39,9 +41,10 @@ const Total = ({ parts }) => {
 const Course = ({ course }) => {
   return (
     <>
-    <Header title={course.name} />
-    <Content parts={course.parts} />
-    <Total parts={course.parts} />
+      <Header title={course.name} />
+      <Content parts={course.parts} />
+      <Total parts={course.parts} />
+      <br />
     </>
   )
 };
@@ -49,6 +52,7 @@ const Course = ({ course }) => {
 const Courses = ({ courseList }) => {
   return (
     <>
+      <h1>Web development curriculum</h1>
       {courseList.map(element => <Course course={element} />)}
     </>
   )
