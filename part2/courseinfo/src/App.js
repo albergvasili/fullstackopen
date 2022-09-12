@@ -53,7 +53,7 @@ const Courses = ({ courseList }) => {
   return (
     <>
       <h1>Web development curriculum</h1>
-      {courseList.map(element => <Course course={element} />)}
+      {courseList.map(elem => <Course key={elem.id} course={elem} />)}
     </>
   )
 };
