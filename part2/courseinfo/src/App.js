@@ -12,12 +12,12 @@ const Part = (props) => {
   )
 };
 
-const Content = (props) => {
+const Content = ({ parts }) => {
   return (
     <div id="content">
-      <Part part = {props.parts[0]} />
-      <Part part = {props.parts[1]} />
-      <Part part = {props.parts[2]} />
+      {parts.map(
+        coursePart => <Part key={coursePart.id} part={coursePart} />
+      )}
     </div>
   )
 };
