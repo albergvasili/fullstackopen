@@ -1,5 +1,42 @@
 import { useState } from 'react';
 
+const Title = ({ title }) => {
+  return (
+    <h2>{title}</h2>
+  )
+};
+
+const Form = ({ submit, value, change }) => {
+  return (
+    <>
+      <form onSubmit={submit}>
+        <div>
+          name: <input value={value} onChange={change} />
+        </div>
+        <Button />
+      </form>
+    </>
+  )
+};
+
+const Button = () => {
+  return (
+        <div>
+          <button type="submit">add</button>
+        </div>
+  )
+};
+
+const Phonebook = ({ phoneList }) => {
+  return (
+    <>
+      {phoneList.map(
+        person => <p key={person.name}>{person.name}</p>
+      )}
+    </>
+  )
+};
+
 const App = () => {
   const [persons, setPersons] = useState([
     {name: 'Alberg Vasili' }
@@ -14,26 +51,16 @@ const App = () => {
     setPersons(persons.concat(newPerson));
     setNewName('');
   };
-
   const handleChange = (event) => {
     setNewName(event.target.value)
   };
 
   return (
     <div>
-      <h2>Phonebook</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          name: <input 
-                  value={newName}
-                  onChange={handleChange}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {persons.map(person => <p key={person.name}>{person.name}</p>)}
+      <Title title="Phonebook" />
+      <Form submit={handleSubmit} value={newName} change={handleChange} />
+      <Title title="Numbers" />
+      <Phonebook phoneList={persons} />
     </div>
   )
 };
