@@ -45,12 +45,22 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const newPerson = {
       name: newName
     };
-    setPersons(persons.concat(newPerson));
+
+    const double = persons.some(
+      log => log.name.toLowerCase() === newName.toLowerCase()
+    );
+
+    double
+      ? alert(`${newName} is already added to phoneook`)
+      : setPersons(persons.concat(newPerson));
     setNewName('');
   };
+
+
   const handleChange = (event) => {
     setNewName(event.target.value)
   };
