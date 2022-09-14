@@ -20,19 +20,19 @@ const Form = ({ submit, children, button }) => {
 const PhonebookInputs = ({ name, number, numberChange, nameChange }) => {
   return (
     <>
-      <Input label="Name:" value={name} change={nameChange} />
-      <Input label="Number:" value={number} change={numberChange} />
+      <Input label="Name:" value={name} onChange={nameChange} />
+      <Input label="Number:" value={number} onChange={numberChange} />
     </>
   )
 };
       
 
-const Input = ({ label, value, change }) => {
+const Input = ({ label, value, onChange }) => {
   return (
         <div>
           <label>
             {label}
-            <input value={value} onChange={change} />
+            <input value={value} onChange={onChange} />
           </label>
         </div>
   )
@@ -60,6 +60,7 @@ const App = () => {
   const [persons, setPersons] = useState([
     {name: 'Alberg Vasili', number:'42'}
   ]);
+  const [filter, setFilter] = useState('');
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
 
@@ -81,6 +82,9 @@ const App = () => {
     setNewName('');
   };
 
+  const filterChange = (event) => {
+    setFilter(event.target.value)
+  };
 
   const nameChange = (event) => {
     setNewName(event.target.value)
@@ -94,7 +98,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-        <Input label="Filter by:" />
+        <Input label="Filter by:" value={filter} onChange={filterChange}/>
       <Title title="New Entry:" />
       <Form submit={handleSubmit} button='Add'>
         <PhonebookInputs name={newName} nameChange={nameChange}
