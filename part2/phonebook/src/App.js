@@ -6,12 +6,12 @@ const Title = ({ title }) => {
   )
 };
 
-const Form = (props) => {
+const Form = ({ submit, children, button }) => {
   return (
     <>
-      <form onSubmit={props.submit}>
-        {props.children}
-        <Button />
+      <form onSubmit={submit}>
+        {children}
+        <Button text={button}/>
       </form>
     </>
   )
@@ -38,10 +38,10 @@ const Input = ({ label, value, change }) => {
   )
 };
 
-const Button = () => {
+const Button = ({ text }) => {
   return (
         <div>
-          <button type="submit">add</button>
+          <button type="submit">{text}</button>
         </div>
   )
 };
@@ -93,12 +93,14 @@ const App = () => {
 
   return (
     <div>
-      <Title title="Phonebook" />
-      <Form submit={handleSubmit}>
+      <h1>Phonebook</h1>
+        <Input label="Filter by:" />
+      <Title title="New Entry:" />
+      <Form submit={handleSubmit} button='Add'>
         <PhonebookInputs name={newName} nameChange={nameChange}
                          number={newNumber} numberChange={numberChange} />
       </Form>
-      <Title title="Numbers" />
+      <Title title="Contact List:" />
       <Phonebook phoneList={persons} />
     </div>
   )
