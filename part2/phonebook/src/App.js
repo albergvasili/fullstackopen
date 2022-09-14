@@ -17,11 +17,11 @@ const Form = (props) => {
   )
 };
 
-const PhonebookInputs = ({ name, number, changeHandler }) => {
+const PhonebookInputs = ({ name, number, numberChange, nameChange }) => {
   return (
     <>
-      <Input label="Name:" value={name} change={changeHandler} />
-      <Input label="Number:" value={number} change={changeHandler} />
+      <Input label="Name:" value={name} change={nameChange} />
+      <Input label="Number:" value={number} change={numberChange} />
     </>
   )
 };
@@ -50,7 +50,7 @@ const Phonebook = ({ phoneList }) => {
   return (
     <>
       {phoneList.map(
-        person => <p key={person.name}>{person.name}</p>
+        person => <p key={person.name}>{person.name} - {person.number}</p>
       )}
     </>
   )
@@ -58,15 +58,17 @@ const Phonebook = ({ phoneList }) => {
 
 const App = () => {
   const [persons, setPersons] = useState([
-    {name: 'Alberg Vasili'}
+    {name: 'Alberg Vasili', number:'42'}
   ]);
   const [newName, setNewName] = useState('');
+  const [newNumber, setNewNumber] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const newPerson = {
-      name: newName
+      name: newName,
+      number: newNumber
     };
 
     const double = persons.some(
@@ -80,15 +82,21 @@ const App = () => {
   };
 
 
-  const handleChange = (event) => {
+  const nameChange = (event) => {
     setNewName(event.target.value)
   };
+
+  const numberChange = (event) => {
+    setNewNumber(event.target.value)
+  };
+
 
   return (
     <div>
       <Title title="Phonebook" />
       <Form submit={handleSubmit}>
-        <PhonebookInputs name={newName} changeHandler={handleChange}  />
+        <PhonebookInputs name={newName} nameChange={nameChange}
+                         number={newNumber} numberChange={numberChange} />
       </Form>
       <Title title="Numbers" />
       <Phonebook phoneList={persons} />
