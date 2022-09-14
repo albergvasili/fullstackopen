@@ -6,16 +6,35 @@ const Title = ({ title }) => {
   )
 };
 
-const Form = ({ submit, value, change }) => {
+const Form = (props) => {
   return (
     <>
-      <form onSubmit={submit}>
-        <div>
-          name: <input value={value} onChange={change} />
-        </div>
+      <form onSubmit={props.submit}>
+        {props.children}
         <Button />
       </form>
     </>
+  )
+};
+
+const PhonebookInputs = ({ name, number, changeHandler }) => {
+  return (
+    <>
+      <Input label="Name:" value={name} change={changeHandler} />
+      <Input label="Number:" value={number} change={changeHandler} />
+    </>
+  )
+};
+      
+
+const Input = ({ label, value, change }) => {
+  return (
+        <div>
+          <label>
+            {label}
+            <input value={value} onChange={change} />
+          </label>
+        </div>
   )
 };
 
@@ -39,7 +58,7 @@ const Phonebook = ({ phoneList }) => {
 
 const App = () => {
   const [persons, setPersons] = useState([
-    {name: 'Alberg Vasili' }
+    {name: 'Alberg Vasili'}
   ]);
   const [newName, setNewName] = useState('');
 
@@ -55,7 +74,7 @@ const App = () => {
     );
 
     double
-      ? alert(`${newName} is already added to phoneook`)
+      ? alert(`${newName} is already added to phonebook`)
       : setPersons(persons.concat(newPerson));
     setNewName('');
   };
@@ -68,7 +87,9 @@ const App = () => {
   return (
     <div>
       <Title title="Phonebook" />
-      <Form submit={handleSubmit} value={newName} change={handleChange} />
+      <Form submit={handleSubmit}>
+        <PhonebookInputs name={newName} changeHandler={handleChange}  />
+      </Form>
       <Title title="Numbers" />
       <Phonebook phoneList={persons} />
     </div>
