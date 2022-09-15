@@ -46,7 +46,7 @@ const Button = ({ text }) => {
   )
 };
 
-const Phonebook = ({ phoneList }) => {
+const ContactList = ({ phoneList }) => {
   return (
     <>
       {phoneList.map(
@@ -56,6 +56,16 @@ const Phonebook = ({ phoneList }) => {
   )
 };
 
+const Phonebook = ({ filter, fullList, filteredList }) => {
+  if (!filter) {
+    return (
+      <ContactList phoneList={filteredList} />
+    )}
+  return (
+      <ContactList phoneList={fullList} />
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     {name: 'Alberg Vasili', number:'42'}
@@ -63,6 +73,10 @@ const App = () => {
   const [filter, setFilter] = useState('');
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+
+  const filteredList = persons.filter(log =>
+    log.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -105,7 +119,7 @@ const App = () => {
                          number={newNumber} numberChange={numberChange} />
       </Form>
       <Title title="Contact List:" />
-      <Phonebook phoneList={persons} />
+      <Phonebook fullList={persons} filteredList={filteredList} />
     </div>
   )
 };
