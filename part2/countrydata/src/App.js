@@ -16,6 +16,15 @@ const Search = ({ find, value, onChange }) => {
 const App = () => {
   const [country, setCountry] = useState('');
 
+  useEffect(() => {
+    if (country){
+      axios
+        .get(`https://restcountries.com/v3.1/name/${country}`)
+        .then(response => {
+          console.log(response)
+        })
+    }
+  },[country])
 
   const changeCountry = (event) => {
     setCountry(event.target.value)
