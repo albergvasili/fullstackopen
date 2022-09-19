@@ -1,7 +1,21 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const Search = ({ find, value, onChange }) => {
+  return (
+    <div>
+      <p>
+        Find {find}:
+        <input value={value} onChange={onChange} type="text" />
+      </p>
+    </div>
+  )
+};
+
 
 const App = () => {
   const [country, setCountry] = useState('');
+
 
   const changeCountry = (event) => {
     setCountry(event.target.value)
@@ -10,10 +24,9 @@ const App = () => {
   return(
     <>
       <h1>Country Data</h1>
-      <p>
-        Find country:
-        <input value={country} onChange={changeCountry} type="text" />
-      </p>
+      <Search find='country' value={country} onChange={changeCountry} />
+      <h2>Country</h2>
+      <p></p>
     </>
   )
 };
