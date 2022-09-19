@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Title = ({ title }) => {
   return (
@@ -67,12 +68,19 @@ const Phonebook = ({ filter, fullList, filteredList }) => {
 }
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    {name: 'Alberg Vasili', number:'42'}
-  ]);
+  const [persons, setPersons] = useState([]);
   const [filter, setFilter] = useState('');
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+        console.log('Inital state:', response.data)
+      })
+  }, [])
 
   const filteredList = persons.filter(log =>
     log.name.toLowerCase().includes(filter.toLowerCase())
@@ -94,6 +102,7 @@ const App = () => {
       ? alert(`${newName} is already added to phonebook`)
       : setPersons(persons.concat(newPerson));
     setNewName('');
+    setNewNumber('');
   };
 
   const filterChange = (event) => {
