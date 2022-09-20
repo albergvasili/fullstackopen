@@ -23,7 +23,28 @@ const Result = ({ result }) => {
           )}
         </div>
       )
+  } else if (result.length === 1) {
+    return <CountryData country={result} />
   }
+};
+
+const CountryData = ({ country }) => {
+  country = country[0];
+  let languages = Object.values(country.languages);
+
+  return (
+    <div>
+      <h2>{country.name.common}</h2>
+      <p>Capital: {country.capital}</p>
+      <p>Area: {country.area}</p>
+      <p>Languages:</p>
+      <ul>
+        {languages.map(lang => <li key={lang}>{lang}</li>)}
+      </ul>
+      <img src={country.flags.png} alt="Country's flag" />
+    </div>
+
+  )
 };
 
 const App = () => {
