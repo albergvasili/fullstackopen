@@ -35,7 +35,7 @@ const MapResults = ({ name, onClick }) => {
     <>
       <p>
         {name}
-        <button onClick={onClick}>Show</button>
+        <button value={name} onClick={onClick}>Show</button>
       </p>
     </>
   )
@@ -69,7 +69,7 @@ const App = () => {
       axios
         .get(`https://restcountries.com/v3.1/name/${country}`)
         .then(response => {
-          console.log(response)
+          console.log(response.data)
           setResult(response.data)
         })
     }
@@ -79,11 +79,20 @@ const App = () => {
     setCountry(event.target.value)
   }
 
+  const showData = (event) => {
+    const name = event.target.value;
+    const countryIndex = result.findIndex(
+      country => country.name.common === name
+    );
+    setResult([result[countryIndex]]);
+  }
+
+
   return(
     <>
       <h1>Country Data</h1>
       <Search find='country' value={country} onChange={changeCountry} />
-      <Result result={result}/>
+      <Result result={result} onClick={showData} />
     </>
   )
 };
