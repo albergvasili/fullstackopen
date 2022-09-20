@@ -12,20 +12,33 @@ const Search = ({ find, value, onChange }) => {
   )
 };
 
-const Result = ({ result }) => {
+const Result = ({ result, show, onClick }) => {
     if (result.length >= 10){
       return <p>Too many matches, specify another filter</p>
     } else if (result.length > 1) {
       return(
         <div>
           {result.map(
-            country => <p key={country.name.common}>{country.name.common}</p>
+            country => <MapResults key={country.name.common}
+                                   name={country.name.common}
+                                   onClick={onClick} />
           )}
         </div>
       )
   } else if (result.length === 1) {
     return <CountryData country={result} />
   }
+};
+
+const MapResults = ({ name, onClick }) => {
+  return (
+    <>
+      <p>
+        {name}
+        <button onClick={onClick}>Show</button>
+      </p>
+    </>
+  )
 };
 
 const CountryData = ({ country }) => {
