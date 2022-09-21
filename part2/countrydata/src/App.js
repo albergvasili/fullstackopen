@@ -55,8 +55,19 @@ const CountryData = ({ country }) => {
         {languages.map(lang => <li key={lang}>{lang}</li>)}
       </ul>
       <img src={country.flags.png} alt="Country's flag" />
+      <WeatherData city={country.capital} />
     </div>
 
+  )
+};
+
+const WeatherData = ({ city }) => {
+  return (
+    <div>
+      <h3>Weather in {city}</h3>
+      <p>Temperature</p>
+      <p>Wind</p>
+    </div>
   )
 };
 
