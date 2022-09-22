@@ -62,11 +62,29 @@ const CountryData = ({ country }) => {
 };
 
 const WeatherData = ({ city }) => {
+  const [weather, setWeather] = useState("");
+  const url = "https://api.openweathermap.org/data/2.5/weather?q=";
+  const appID = "&appid=";
+  const api_key = process.env.REACT_APP_API_KEY;
+  const units = "&units=metric";
+
+  useEffect(() => {
+    axios
+      .get(url + city + appID + api_key + units)
+      .then(response => {
+        console.log("Weather:", response.data)
+        setWeather({
+          temp:response.data.main.temp,
+          wind:response.data.wind.speed
+        })
+      })
+  }, [api_key, city]);
+
   return (
     <div>
       <h3>Weather in {city}</h3>
-      <p>Temperature</p>
-      <p>Wind</p>
+      <p>Temperature {weather.temp}°C</p>
+      <p>Wind {weather.wind} m/s</p>
     </div>
   )
 };
@@ -80,11 +98,11 @@ const App = () => {
       axios
         .get(`https://restcountries.com/v3.1/name/${country}`)
         .then(response => {
-          console.log(response.data)
+          console.log("Countries:", response.data)
           setResult(response.data)
         })
     }
-  },[country])
+  },[country]);
 
   const changeCountry = (event) => {
     setCountry(event.target.value)
