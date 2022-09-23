@@ -67,6 +67,7 @@ const WeatherData = ({ city }) => {
   const appID = "&appid=";
   const api_key = process.env.REACT_APP_API_KEY;
   const units = "&units=metric";
+  const icon = `http://openweathermap.org/img/wn/${weather.icon}@2x.png`;
 
   useEffect(() => {
     axios
@@ -74,8 +75,9 @@ const WeatherData = ({ city }) => {
       .then(response => {
         console.log("Weather:", response.data)
         setWeather({
-          temp:response.data.main.temp,
-          wind:response.data.wind.speed
+          temp: response.data.main.temp,
+          wind: response.data.wind.speed,
+          icon: response.data.weather[0].icon
         })
       })
   }, [api_key, city]);
@@ -84,13 +86,14 @@ const WeatherData = ({ city }) => {
     <div>
       <h3>Weather in {city}</h3>
       <p>Temperature {weather.temp}°C</p>
+      <img src={icon} alt="Weather condition icon" />
       <p>Wind {weather.wind} m/s</p>
     </div>
   )
 };
 
 const App = () => {
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState("");
   const [result, setResult] = useState({});
 
   useEffect(() => {
@@ -120,7 +123,7 @@ const App = () => {
   return(
     <>
       <h1>Country Data</h1>
-      <Search find='country' value={country} onChange={changeCountry} />
+      <Search find="country" value={country} onChange={changeCountry} />
       <Result result={result} onClick={showData} />
     </>
   )
