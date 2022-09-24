@@ -39,9 +39,17 @@ const App = () => {
 
     double
       ? alert(`${newName} is already added to phonebook`)
-      : setPersons(persons.concat(newPerson));
+      : addToServer(newPerson);
     setNewName('');
     setNewNumber('');
+  };
+
+  const addToServer = (newPerson) => {
+    axios
+      .post('http://localhost:3001/persons', newPerson)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+      })
   };
 
   const filterChange = (event) => {
