@@ -1,71 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
-const Title = ({ title }) => {
-  return (
-    <h2>{title}</h2>
-  )
-};
-
-const Form = ({ submit, children, button }) => {
-  return (
-    <>
-      <form onSubmit={submit}>
-        {children}
-        <Button text={button}/>
-      </form>
-    </>
-  )
-};
-
-const PhonebookInputs = ({ name, number, numberChange, nameChange }) => {
-  return (
-    <>
-      <Input label="Name:" value={name} onChange={nameChange} />
-      <Input label="Number:" value={number} onChange={numberChange} />
-    </>
-  )
-};
-      
-
-const Input = ({ label, value, onChange }) => {
-  return (
-        <div>
-          <label>
-            {label}
-            <input value={value} onChange={onChange} />
-          </label>
-        </div>
-  )
-};
-
-const Button = ({ text }) => {
-  return (
-        <div>
-          <button type="submit">{text}</button>
-        </div>
-  )
-};
-
-const ContactList = ({ phoneList }) => {
-  return (
-    <>
-      {phoneList.map(
-        person => <p key={person.name}>{person.name} - {person.number}</p>
-      )}
-    </>
-  )
-};
-
-const Phonebook = ({ filter, fullList, filteredList }) => {
-  if (!filter) {
-    return (
-      <ContactList phoneList={filteredList} />
-    )}
-  return (
-      <ContactList phoneList={fullList} />
-  )
-}
+import Form from './components/Form';
+import Input from './components/Input';
+import PhonebookInputs from './components/PhonebookInputs';
+import Phonebook from './components/Phonebook';
+import Title from './components/Title';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
