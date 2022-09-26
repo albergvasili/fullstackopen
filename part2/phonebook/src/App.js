@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import Form from './components/Form';
 import Input from './components/Input';
 import PhonebookInputs from './components/PhonebookInputs';
 import Phonebook from './components/Phonebook';
 import Title from './components/Title';
+import methods from './services/persons';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -13,11 +13,11 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-        console.log('Inital state:', response.data)
+    methods
+      .getAll()
+      .then(initialPhonebook => {
+        setPersons(initialPhonebook)
+        console.log('Inital state:', initialPhonebook)
       })
   }, [])
 
@@ -45,10 +45,10 @@ const App = () => {
   };
 
   const addToServer = (newPerson) => {
-    axios
-      .post('http://localhost:3001/persons', newPerson)
-      .then(response => {
-        setPersons(persons.concat(response.data))
+    methods
+      .addNew(newPerson)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
       })
   };
 
