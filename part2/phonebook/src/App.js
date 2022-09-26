@@ -53,13 +53,14 @@ const App = () => {
   };
 
   const deleteContact = (entry) => {
-  const id = entry.target.value;
-    methods
-      .deleteEntry(id)
-      .then(returnedPerson => {
-        setPersons(persons.filter(person => person.id !== id))
-        console.log(persons);
-      })
+    const id = entry.target.value;
+    if (window.confirm(`Delete ${entry.target.name}?`)) {
+      methods
+        .deleteEntry(id)
+        .then(() => {
+          setPersons(persons.filter(person => person.id !== id))
+        })
+    }
   };
 
   const filterChange = (event) => {

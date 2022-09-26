@@ -27,7 +27,8 @@ const Entries = ({ person, onClick }) => {
   <>
     <p key={person.name}>
       {person.name} - {person.number}
-      <button type="submit" value={person.id}  onClick={onClick}>
+      <button type="submit" name={person.name}
+        value={person.id}  onClick={onClick}>
         Delete
       </button>
     </p>
