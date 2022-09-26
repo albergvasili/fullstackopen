@@ -52,6 +52,16 @@ const App = () => {
       })
   };
 
+  const deleteContact = (entry) => {
+  const id = entry.target.value;
+    methods
+      .deleteEntry(id)
+      .then(returnedPerson => {
+        setPersons(persons.filter(person => person.id !== id))
+        console.log(persons);
+      })
+  };
+
   const filterChange = (event) => {
     setFilter(event.target.value)
   };
@@ -75,7 +85,9 @@ const App = () => {
                          number={newNumber} numberChange={numberChange} />
       </Form>
       <Title title="Contact List:" />
-      <Phonebook fullList={persons} filteredList={filteredList} />
+      <Phonebook fullList={persons}
+        filteredList={filteredList}
+        onClick={deleteContact} />
     </div>
   )
 };
