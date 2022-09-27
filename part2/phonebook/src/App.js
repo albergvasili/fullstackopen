@@ -33,12 +33,14 @@ const App = () => {
       number: newNumber
     };
 
-    const double = persons.some(
+    const doubleCheck = persons.some(
       log => log.name.toLowerCase() === newName.toLowerCase()
     );
 
-    double
-      ? alert(`${newName} is already added to phonebook`)
+    const doubleContact = persons.filter(person => person.name === newName);
+
+    doubleCheck
+      ? updateContact(doubleContact[0].id, newPerson)
       : addToServer(newPerson);
     setNewName('');
     setNewNumber('');
@@ -50,6 +52,19 @@ const App = () => {
       .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
       })
+  };
+
+  const updateContact = (id, newPerson) => {
+    if (window.confirm(`${newPerson.name} is already added to phonebook,` +
+                       ` replace the old number with a new one?`)) {
+      methods
+        .updateEntry(id, newPerson)
+        .then(returnedPerson => {
+          setPersons(persons.map(
+            person => person.id !== id ? person : returnedPerson
+          ))
+        })
+    }
   };
 
   const deleteContact = (entry) => {
