@@ -6,11 +6,31 @@ import Phonebook from './components/Phonebook';
 import Title from './components/Title';
 import methods from './services/persons';
 
+const Notification = ({ message }) => {
+  const messageStyle = {
+    marginBottom: 15,
+    border: 'solid green',
+    color: 'green',
+    paddingLeft: 5
+  };
+
+  if (message) {
+    return (
+      <div className='Notification' style={messageStyle}>
+        <p>
+          {message}
+        </p>
+      </div>
+    )
+  }
+};
+
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [filter, setFilter] = useState('');
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+  const [notification, setNotification] = useState('');
 
   useEffect(() => {
     methods
@@ -50,13 +70,15 @@ const App = () => {
     methods
       .addNew(newPerson)
       .then(returnedPerson => {
+        setNotification(`Added ${newPerson.name}`)
+        setTimeout(() => {
+          setNotification(null)
+        }, 5000);
         setPersons(persons.concat(returnedPerson))
       })
   };
 
   const updateContact = (id, newPerson) => {
-    if (window.confirm(`${newPerson.name} is already added to phonebook,` +
-                       ` replace the old number with a new one?`)) {
       methods
         .updateEntry(id, newPerson)
         .then(returnedPerson => {
@@ -64,7 +86,6 @@ const App = () => {
             person => person.id !== id ? person : returnedPerson
           ))
         })
-    }
   };
 
   const deleteContact = (entry) => {
@@ -94,6 +115,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification message={notification} />
         <Input label="Filter by:" value={filter} onChange={filterChange}/>
       <Title title="New Entry:" />
       <Form submit={handleSubmit} button='Add'>
