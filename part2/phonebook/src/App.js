@@ -7,7 +7,7 @@ import Title from './components/Title';
 import methods from './services/persons';
 
 const Notification = ({ message }) => {
-  const messageStyle = {
+  let messageStyle = {
     marginBottom: 15,
     border: 'solid green',
     color: 'green',
@@ -15,10 +15,14 @@ const Notification = ({ message }) => {
   };
 
   if (message) {
+    if (!message.green) {
+      messageStyle.border = 'solid red';
+      messageStyle.color = 'red';
+    }
     return (
       <div className='Notification' style={messageStyle}>
         <p>
-          {message}
+          {message.text}
         </p>
       </div>
     )
@@ -70,7 +74,10 @@ const App = () => {
     methods
       .addNew(newPerson)
       .then(returnedPerson => {
-        setNotification(`Added ${newPerson.name}`)
+        setNotification({
+          green: true,
+          text: `Added ${newPerson.name}`
+        })
         setTimeout(() => {
           setNotification(null)
         }, 5000);
@@ -85,6 +92,12 @@ const App = () => {
           setPersons(persons.map(
             person => person.id !== id ? person : returnedPerson
           ))
+        })
+        .catch(error => {
+          setNotification({
+            green: false,
+            text: `Information of ${newPerson.name} has already `
+                  + `been removed from server`});
         })
   };
 
