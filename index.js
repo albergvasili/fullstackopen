@@ -25,6 +25,10 @@ const data = [
   }
 ];
 
+app.get('/api/persons', (req, res) => {
+  res.send(data);
+});
+
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
