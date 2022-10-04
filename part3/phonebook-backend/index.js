@@ -29,6 +29,18 @@ app.get('/api/persons', (req, res) => {
   res.send(data);
 });
 
+app.get('/api/persons/:id', (req, res) => {
+  const id = Number(req.params.id);
+  const entry = data.find(person => person.id === id);
+  if (entry) {
+    res.json(entry)
+  } else {
+    res.status(400).json({
+      error: `No entries were found with the ID #${id}`
+    });
+  }
+});
+
 app.get('/info', (req, res) => {
   const now = new Date();
   const amount = data.length;
