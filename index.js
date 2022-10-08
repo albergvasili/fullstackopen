@@ -58,6 +58,16 @@ app.post('/api/persons', (req, res) => {
   const body = req.body;
   console.log(body);
 
+  if (!body.name || !body.number) {
+    res.status(404).json({
+      error: "Name or number cannot be empty"
+    })
+  } else if (data.find(person => person.name === body.name)) {
+    res.status(404).json({
+      error: `${body.name} already exists in the phonebook`
+    })
+  };
+
   const entry = {
     id: generateID(),
     name: body.name,
