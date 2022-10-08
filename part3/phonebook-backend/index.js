@@ -50,6 +50,24 @@ app.get('/info', (req, res) => {
     `);
 });
 
+const generateID = () => {
+  return Math.floor(Math.random() * 10000);
+}
+
+app.post('/api/persons', (req, res) => {
+  const body = req.body;
+  console.log(body);
+
+  const entry = {
+    id: generateID(),
+    name: body.name,
+    number: body.number
+  }
+
+  data = data.concat(entry);
+  res.json(data);
+});
+
 app.delete('/api/persons/:id', (req, res) => {
   const id = Number(req.params.id);
   data = data.filter(person => person.id !== id);
