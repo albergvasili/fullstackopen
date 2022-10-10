@@ -2,7 +2,16 @@ const express = require('express');
 const morgan = require('morgan');
 const app = express();
 app.use(express.json());
-app.use(morgan('tiny'));
+
+app.use(morgan(':method :url :status - :response-time ms - :data'));
+
+morgan.token('data', (req, res) => {
+  if (req.method === 'POST') {
+    return JSON.stringify(req.body);
+  } else {
+    return 'No data';
+  }
+});
 
 let data = [
   {
@@ -58,7 +67,6 @@ const generateID = () => {
 
 app.post('/api/persons', (req, res) => {
   const body = req.body;
-  console.log(body);
 
   if (!body.name || !body.number) {
     res.status(404).json({
