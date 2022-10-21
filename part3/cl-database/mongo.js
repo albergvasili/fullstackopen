@@ -17,14 +17,16 @@ mongoose
     console.log('connected');
 
     const entry = new Entry({
-      name: 'Test',
-      number: 42
+      name: process.argv[3],
+      number: process.argv[4]
     });
 
     return entry.save();
   })
   .then(() => {
-    console.log('Entry saved');
+    console.log(
+      `Added ${process.argv[3]} number ${process.argv[4]} to phonebook`
+  );
     return mongoose.connection.close()
   })
   .catch((error) => console.log(error))
