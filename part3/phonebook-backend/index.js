@@ -67,11 +67,14 @@ app.get('/api/persons/:id', (req, res) => {
 
 app.get('/info', (req, res) => {
   const now = new Date();
-  const amount = data.length;
-  res.send(`
-    <p>Phonebook has info for ${amount} people</p>
-    <p>${now}</p>
-    `);
+
+  Entry.find({}).then(result => {
+    const amount = result.length;
+    res.send(`
+      <p>Phonebook has info for ${amount} people</p>
+      <p>${now}</p>
+      `);
+  })
 });
 
 const generateID = () => {
