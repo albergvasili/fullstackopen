@@ -102,7 +102,7 @@ const App = () => {
   };
 
   const deleteContact = (entry) => {
-    const id = Number(entry.target.value);
+    const id = entry.target.value;
     if (window.confirm(`Delete ${entry.target.name}?`)) {
       methods
         .deleteEntry(id)
