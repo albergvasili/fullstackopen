@@ -50,15 +50,19 @@ app.get('/api/persons', (req, res) => {
 });
 
 app.get('/api/persons/:id', (req, res) => {
-  const id = Number(req.params.id);
-  const entry = data.find(person => person.id === id);
-  if (entry) {
-    res.json(entry)
-  } else {
-    res.status(400).json({
-      error: `No entries were found with the ID #${id}`
-    });
-  }
+  const id = req.params.id;
+
+  Entry.findById(id).then(person => {
+    if (person) {
+      res.json(person);
+    } else {
+      res.status(400).json(id);
+    }
+  })
+  .catch(error => {
+    console.log(error);
+    res.status(400).end();
+  })
 });
 
 app.get('/info', (req, res) => {
@@ -104,9 +108,7 @@ app.delete('/api/persons/:id', (req, res) => {
   res.status(204).end();
 });
 
-
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
-
