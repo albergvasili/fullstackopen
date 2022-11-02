@@ -87,14 +87,14 @@ app.post('/api/persons', (req, res) => {
     })
   };
 
-  const entry = {
-    id: generateID(),
-    name: body.name,
-    number: body.number
-  }
+   const entry = new Entry({
+     name: body.name,
+     number: body.number
+   });
 
-  data = data.concat(entry);
-  res.json(data);
+   entry.save().then(savedEntry => {
+     res.json(savedEntry);
+   });
 });
 
 app.delete('/api/persons/:id', (req, res) => {
