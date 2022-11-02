@@ -105,10 +105,15 @@ app.post('/api/persons', (req, res) => {
 });
 
 app.delete('/api/persons/:id', (req, res) => {
-  const id = Number(req.params.id);
-  data = data.filter(person => person.id !== id);
-
-  res.status(204).end();
+  Entry.findByIdAndRemove(req.params.id)
+    .then(result => {
+      if (result) {
+      res.status(204).end()
+      }
+    })
+    .catch((error) => {
+        res.status(402).end()
+    })
 });
 
 const PORT = 3001;
