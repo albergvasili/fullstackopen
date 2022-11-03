@@ -13,8 +13,13 @@ mongoose.connect(url)
   })
 
 const schema = new mongoose.Schema({
-  name: String,
-  number: Number
+  name: {
+    type: String,
+    minLength: 3
+  },
+  number: {
+    type: Number
+  }
 });
 
 schema.set('toJSON', {
