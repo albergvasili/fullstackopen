@@ -49,7 +49,7 @@ app.get('/api/persons', (req, res) => {
     })
 });
 
-app.get('/api/persons/:id', (req, res) => {
+app.get('/api/persons/:id', (req, res, next) => {
   const id = req.params.id;
 
   Entry.findById(id).then(person => {
@@ -59,10 +59,7 @@ app.get('/api/persons/:id', (req, res) => {
       res.status(400).json(id);
     }
   })
-  .catch(error => {
-    console.log(error);
-    res.status(400).end();
-  })
+  .catch(error => next(error))
 });
 
 app.get('/info', (req, res) => {
@@ -101,20 +98,30 @@ app.post('/api/persons', (req, res) => {
 
    entry.save().then(savedEntry => {
      res.json(savedEntry);
-   });
+   })
 });
 
-app.delete('/api/persons/:id', (req, res) => {
+app.delete('/api/persons/:id', (req, res, next) => {
   Entry.findByIdAndRemove(req.params.id)
     .then(result => {
       if (result) {
       res.status(204).end()
       }
     })
-    .catch((error) => {
-        res.status(402).end()
-    })
+    .catch((error) => next(error))
 });
+
+const errorHandler = (error, req, res, next) => {
+  console.error(error.message);
+
+  if (error.name === 'CastError') {
+    return res.status(400).send({error: 'malformatted id'})
+  }
+
+  next(error)
+};
+
+app.use(errorHandler);
 
 const PORT = 3001;
 app.listen(PORT, () => {
