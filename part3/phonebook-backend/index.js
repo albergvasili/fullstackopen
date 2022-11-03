@@ -51,27 +51,23 @@ app.get('/info', (req, res) => {
   })
 });
 
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
   const body = req.body;
 
   if (!body.name || !body.number) {
-    res.status(404).json({
-      error: "Name or number cannot be empty"
-    })
-  } else if (data.find(person => person.name === body.name)) {
-    res.status(404).json({
-      error: `${body.name} already exists in the phonebook`
-    })
-  };
+    throw new Error('EmptyData')
+  }
 
    const entry = new Entry({
      name: body.name,
      number: body.number
    });
 
-   entry.save().then(savedEntry => {
+   entry.save()
+    .then(savedEntry => {
      res.json(savedEntry);
    })
+    .catch(error => next(error))
 });
 
 app.put('/api/persons/:id', (req, res, next) => {
@@ -103,6 +99,8 @@ const errorHandler = (error, req, res, next) => {
 
   if (error.name === 'CastError') {
     return res.status(400).send({error: 'malformatted id'})
+  } else if (error.name === 'ValidationError') {
+    return res.status(400).send(error.message)
   }
 
   next(error)
