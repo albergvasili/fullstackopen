@@ -19,29 +19,6 @@ morgan.token('data', (req, res) => {
   }
 });
 
-let data = [
-  {
-    "id": 1,
-    "name": "Alberg Vasili",
-    "number": "123-12334"
-  },
-  {
-    "id": 2,
-    "name": "Luna Greenleaf",
-    "number": "223-15334"
-  },
-  {
-    "id": 3,
-    "name": "Monsieur Monkey",
-    "number": "223-35038"
-  },
-  {
-    "id": 4,
-    "name": "Akesi Jelo",
-    "number": "423-25238"
-  }
-];
-
 app.get('/api/persons', (req, res) => {
   Entry.find({})
     .then(result => {
@@ -73,10 +50,6 @@ app.get('/info', (req, res) => {
       `);
   })
 });
-
-const generateID = () => {
-  return Math.floor(Math.random() * 10000);
-}
 
 app.post('/api/persons', (req, res) => {
   const body = req.body;
