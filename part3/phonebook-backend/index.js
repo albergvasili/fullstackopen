@@ -101,6 +101,20 @@ app.post('/api/persons', (req, res) => {
    })
 });
 
+app.put('/api/persons/:id', (req, res, next) => {
+  const body = req.body;
+
+  const entry = {
+    number: body.number
+  };
+
+  Entry.findByIdAndUpdate(req.params.id, entry, {new: true})
+    .then(returnedEntry =>
+      res.json(returnedEntry)
+    )
+    .catch(error => next(error))
+});
+
 app.delete('/api/persons/:id', (req, res, next) => {
   Entry.findByIdAndRemove(req.params.id)
     .then(result => {
