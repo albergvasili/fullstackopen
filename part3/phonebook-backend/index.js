@@ -54,10 +54,6 @@ app.get('/info', (req, res) => {
 app.post('/api/persons', (req, res, next) => {
   const body = req.body;
 
-  if (!body.name || !body.number) {
-    throw new Error('EmptyData')
-  }
-
    const entry = new Entry({
      name: body.name,
      number: body.number
@@ -102,7 +98,7 @@ const errorHandler = (error, req, res, next) => {
   console.error(error.message);
 
   if (error.name === 'CastError') {
-    return res.status(400).send({error: 'malformatted id'})
+    return res.status(400).send(error.message)
   } else if (error.name === 'ValidationError') {
     return res.status(400).send(error.message)
   }
