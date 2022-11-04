@@ -77,7 +77,11 @@ app.put('/api/persons/:id', (req, res, next) => {
     number: body.number
   };
 
-  Entry.findByIdAndUpdate(req.params.id, entry, {new: true})
+  Entry.findByIdAndUpdate(
+    req.params.id,
+    entry,
+    { new: true, runValidators: true, context: 'query' }
+  )
     .then(returnedEntry =>
       res.json(returnedEntry)
     )
