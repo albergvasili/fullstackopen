@@ -45,6 +45,13 @@ const App = () => {
       })
   }, [])
 
+  const showNotification = (green, text) => {
+    setNotification({green, text})
+    setTimeout(() => {
+      setNotification(null)
+    }, 5000);
+  };
+
   const filteredList = persons.filter(log =>
     log.name.toLowerCase().includes(filter.toLowerCase())
   );
@@ -74,14 +81,12 @@ const App = () => {
     methods
       .addNew(newPerson)
       .then(returnedPerson => {
-        setNotification({
-          green: true,
-          text: `Added ${newPerson.name}`
-        })
-        setTimeout(() => {
-          setNotification(null)
-        }, 5000);
+        showNotification(true, `Added ${newPerson.name}`);
         setPersons(persons.concat(returnedPerson))
+      })
+      .catch(error => {
+        console.log(error.response.data)
+        showNotification(false, error.response.data);
       })
   };
 
@@ -89,15 +94,14 @@ const App = () => {
       methods
         .updateEntry(id, newPerson)
         .then(returnedPerson => {
+          showNotification(true, `Updated ${returnedPerson.name}`);
           setPersons(persons.map(
             person => person.id !== id ? person : returnedPerson
           ))
         })
         .catch(error => {
-          setNotification({
-            green: false,
-            text: `Information of ${newPerson.name} has already `
-                  + `been removed from server`});
+          console.log(error.response.data)
+          showNotification(false, error.response.data);
         })
   };
 
@@ -107,6 +111,7 @@ const App = () => {
       methods
         .deleteEntry(id)
         .then(() => {
+          showNotification(false, `Deleted ${entry.target.name}`);
           setPersons(persons.filter(person => person.id !== id))
         })
     }
