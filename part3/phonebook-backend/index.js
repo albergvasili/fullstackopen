@@ -1,7 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const app = express();
+const Entry = require('./models/entry');
+
 app.use(express.json());
 app.use(express.static('build'));
 app.use(cors());
@@ -16,91 +19,102 @@ morgan.token('data', (req, res) => {
   }
 });
 
-let data = [
-  {
-    "id": 1,
-    "name": "Alberg Vasili",
-    "number": "123-12334"
-  },
-  {
-    "id": 2,
-    "name": "Luna Greenleaf",
-    "number": "223-15334"
-  },
-  {
-    "id": 3,
-    "name": "Monsieur Monkey",
-    "number": "223-35038"
-  },
-  {
-    "id": 4,
-    "name": "Akesi Jelo",
-    "number": "423-25238"
-  }
-];
-
 app.get('/api/persons', (req, res) => {
-  res.send(data);
+  Entry.find({})
+    .then(result => {
+      res.json(result);
+    })
 });
 
-app.get('/api/persons/:id', (req, res) => {
-  const id = Number(req.params.id);
-  const entry = data.find(person => person.id === id);
-  if (entry) {
-    res.json(entry)
-  } else {
-    res.status(400).json({
-      error: `No entries were found with the ID #${id}`
-    });
-  }
+app.get('/api/persons/:id', (req, res, next) => {
+  const id = req.params.id;
+
+  Entry.findById(id).then(person => {
+    if (person) {
+      res.json(person);
+    } else {
+      res.status(400).json(id);
+    }
+  })
+  .catch(error => next(error))
 });
 
 app.get('/info', (req, res) => {
   const now = new Date();
-  const amount = data.length;
-  res.send(`
-    <p>Phonebook has info for ${amount} people</p>
-    <p>${now}</p>
-    `);
+
+  Entry.find({}).then(result => {
+    const amount = result.length;
+    res.send(`
+      <p>Phonebook has info for ${amount} people</p>
+      <p>${now}</p>
+      `);
+  })
 });
 
-const generateID = () => {
-  return Math.floor(Math.random() * 10000);
-}
-
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
   const body = req.body;
 
-  if (!body.name || !body.number) {
-    res.status(404).json({
-      error: "Name or number cannot be empty"
-    })
-  } else if (data.find(person => person.name === body.name)) {
-    res.status(404).json({
-      error: `${body.name} already exists in the phonebook`
-    })
-  };
+  Entry.find({name: body.name})
+    .then(result => {
+      if (result.length !== 0) {
+        res.status(404).send('Duplicate data')
+      } else {
+        const entry = new Entry({
+          name: body.name,
+          number: body.number
+        });
+
+        entry.save()
+          .then(savedEntry => {
+          res.json(savedEntry);
+        })
+      }
+  }).catch(error => next(error));
+});
+
+app.put('/api/persons/:id', (req, res, next) => {
+  const body = req.body;
 
   const entry = {
-    id: generateID(),
-    name: body.name,
     number: body.number
+  };
+
+  Entry.findByIdAndUpdate(
+    req.params.id,
+    entry,
+    { new: true, runValidators: true, context: 'query' }
+  )
+    .then(returnedEntry =>
+      res.json(returnedEntry)
+    )
+    .catch(error => next(error))
+});
+
+app.delete('/api/persons/:id', (req, res, next) => {
+  Entry.findByIdAndRemove(req.params.id)
+    .then(result => {
+      if (result) {
+      res.status(204).end()
+      }
+    })
+    .catch((error) => next(error))
+});
+
+const errorHandler = (error, req, res, next) => {
+  console.error(error.message);
+
+  if (error.name === 'CastError') {
+    return res.status(400).send(error.message)
+  } else if (error.name === 'ValidationError') {
+    return res.status(400).send(error.message)
   }
 
-  data = data.concat(entry);
-  res.json(data);
-});
+  next(error)
+};
 
-app.delete('/api/persons/:id', (req, res) => {
-  const id = Number(req.params.id);
-  data = data.filter(person => person.id !== id);
+app.use(errorHandler);
 
-  res.status(204).end();
-});
-
-
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
-
