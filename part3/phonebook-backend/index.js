@@ -54,16 +54,22 @@ app.get('/info', (req, res) => {
 app.post('/api/persons', (req, res, next) => {
   const body = req.body;
 
-   const entry = new Entry({
-     name: body.name,
-     number: body.number
-   });
+  Entry.find({name: body.name})
+    .then(result => {
+      if (result.length !== 0) {
+        res.status(404).send('Duplicate data')
+      } else {
+        const entry = new Entry({
+          name: body.name,
+          number: body.number
+        });
 
-   entry.save()
-    .then(savedEntry => {
-     res.json(savedEntry);
-   })
-    .catch(error => next(error))
+        entry.save()
+          .then(savedEntry => {
+          res.json(savedEntry);
+        })
+      }
+  }).catch(error => next(error));
 });
 
 app.put('/api/persons/:id', (req, res, next) => {
