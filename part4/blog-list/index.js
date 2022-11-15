@@ -5,15 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const logger = require('./utils/logger');
 const config = require('./utils/config');
-
-const blogSchema = new mongoose.Schema({
-  title: String,
-  authors: String,
-  url: String,
-  likes: Number
-});
-
-const Blog = mongoose.model('Blog', blogSchema);
+const Blog = require('./models/blog');
 
 mongoose.connect(config.mongoURL);
 
