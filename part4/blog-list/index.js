@@ -1,3 +1,4 @@
+require('dotenv').config();
 const http = require('http');
 const express = require('express');
 const app = express();
@@ -13,8 +14,8 @@ const blogSchema = new mongoose.Schema({
 
 const Blog = mongoose.model('Blog', blogSchema);
 
-const mongoURl= 'test';
-mongoose.connect(mongoUrl);
+const mongoURL= process.env.MONGO_URL;
+mongoose.connect(mongoURL);
 
 app.use(cors());
 app.use(express.json());
