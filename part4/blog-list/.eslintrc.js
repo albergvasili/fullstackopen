@@ -2,7 +2,9 @@ module.exports = {
     'env': {
         'node': true,
         'commonjs': true,
-        'es2021': true
+        'es2021': true,
+        'node': true,
+        'jest': true
     },
     'extends': 'eslint:recommended',
     'overrides': [
@@ -27,16 +29,15 @@ module.exports = {
             'error',
             'always'
         ],
-        "eqeqeq": "error",
-        "no-trailing-spaces": "error",
-        "object-curly-spacing": [
-            "error",
-            "always"
+        'eqeqeq': 'error',
+        'no-trailing-spaces': 'error',
+        'object-curly-spacing': [
+            'error',
+            'always'
         ],
-        "arrow-spacing": [
-            "error",
-            {"before": true, "after": true}
+        'arrow-spacing': [
+            'error',
+            {'before': true, 'after': true}
         ]
-
     }
 };
