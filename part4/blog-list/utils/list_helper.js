@@ -3,8 +3,8 @@ const dummy = () => {
 };
 
 const totalLikes = (blogs) => {
-  const reducer = (accumulator, blogs) => {
-    return accumulator + blogs.likes;
+  const reducer = (accumulator, blog) => {
+    return accumulator + blog.likes;
   };
 
   return blogs.reduce(reducer, 0);
