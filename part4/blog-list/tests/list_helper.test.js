@@ -9,7 +9,7 @@ const singleBlogList = [
     likes: 9
   }
 ];
-const twoBlogList = [
+const multiBlogList = [
   {
     title: 'String',
     authors: 'String',
@@ -21,11 +21,18 @@ const twoBlogList = [
     authors: 'Tralali',
     url: 'Line',
     likes: 7
+  },
+  {
+    title: 'Satori',
+    authors: 'Surprise',
+    url: 'We',
+    likes: 11
   }
+
 ];
 
 test('dummy returns one', () => {
-  const result = listHelper.dummy(twoBlogList);
+  const result = listHelper.dummy(multiBlogList);
   expect(result).toBe(1);
 });
 
@@ -40,7 +47,7 @@ describe('total likes', () => {
   });
 
   test('of a list with multiple blogs', () => {
-    expect(listHelper.totalLikes(twoBlogList)).toBe(10);
+    expect(listHelper.totalLikes(multiBlogList)).toBe(21);
   });
 });
 
@@ -52,6 +59,6 @@ describe('Blog with most likes', () => {
   });
 
   test('of a list with multiple blogs', () => {
-    expect(listHelper.favoriteBlog(twoBlogList)).toEqual(twoBlogList[1]);
+    expect(listHelper.favoriteBlog(multiBlogList)).toEqual(multiBlogList[2]);
   });
 });
