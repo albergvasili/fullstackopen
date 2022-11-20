@@ -43,3 +43,15 @@ describe('total likes', () => {
     expect(listHelper.totalLikes(twoBlogList)).toBe(10);
   });
 });
+
+describe('Blog with most likes', () => {
+
+  test('of single blog list is the single blog itself', () => {
+    expect(listHelper.favoriteBlog(singleBlogList))
+      .toEqual(singleBlogList[0]);
+  });
+
+  test('of a list with multiple blogs', () => {
+    expect(listHelper.favoriteBlog(twoBlogList)).toEqual(twoBlogList[1]);
+  });
+});
