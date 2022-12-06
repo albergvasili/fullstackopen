@@ -24,8 +24,44 @@ const favoriteBlog = (blogs) => {
   return topBlog;
 };
 
+const emptyList = [];
+
+const singleBlogList = [
+  {
+    title: 'Loneliness',
+    authors: 'Sola No',
+    url: 'Ouais',
+    likes: 9
+  }
+];
+
+const multiBlogList = [
+  {
+    title: 'String',
+    authors: 'String',
+    url: 'String',
+    likes: 3
+  },
+  {
+    title: 'Guten tag',
+    authors: 'Tralali',
+    url: 'Line',
+    likes: 7
+  },
+  {
+    title: 'Satori',
+    authors: 'Surprise',
+    url: 'We',
+    likes: 11
+  }
+
+];
+
 module.exports = {
   dummy,
   totalLikes,
-  favoriteBlog
+  favoriteBlog,
+  emptyList,
+  singleBlogList,
+  multiBlogList
 };
