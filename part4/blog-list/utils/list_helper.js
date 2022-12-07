@@ -35,6 +35,12 @@ const singleBlogList = [
   }
 ];
 
+const postWithoutLikes = {
+  title: 'Undesirable',
+  authors: 'Your enemy',
+  url: 'NO MORE'
+};
+
 const multiBlogList = [
   {
     title: 'String',
@@ -63,5 +69,6 @@ module.exports = {
   favoriteBlog,
   emptyList,
   singleBlogList,
-  multiBlogList
+  multiBlogList,
+  postWithoutLikes
 };
