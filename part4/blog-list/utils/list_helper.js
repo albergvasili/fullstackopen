@@ -41,6 +41,12 @@ const postWithoutLikes = {
   url: 'NO MORE'
 };
 
+const postWithoutTitle = {
+  authors: 'Inconnu',
+  url: 'Atteint',
+  likes: 4
+};
+
 const multiBlogList = [
   {
     title: 'String',
@@ -70,5 +76,6 @@ module.exports = {
   emptyList,
   singleBlogList,
   multiBlogList,
-  postWithoutLikes
+  postWithoutLikes,
+  postWithoutTitle
 };
