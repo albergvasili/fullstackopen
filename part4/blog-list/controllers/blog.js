@@ -16,18 +16,22 @@ blogRouter.post('/', (req, res) => {
     body['likes'] = 0;
   }
 
-  const blog = new Blog({
-    title: body.title,
-    authors: body.authors,
-    url: body.url,
-    likes: body.likes
-  });
-
-  blog
-    .save()
-    .then(result => {
-      res.status(201).json(result);
+  if (body.title && body.url) {
+    const blog = new Blog({
+      title: body.title,
+      authors: body.authors,
+      url: body.url,
+      likes: body.likes
     });
+
+    blog
+      .save()
+      .then(result => {
+        res.status(201).json(result);
+      });
+  } else {
+    res.status(400).end();
+  }
 });
 
 module.exports =  blogRouter;
