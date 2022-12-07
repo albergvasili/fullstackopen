@@ -9,12 +9,16 @@ blogRouter.get('/', (req, res) => {
     });
 });
 
-blogRouter.post('/', (req, res, next) => {
+blogRouter.post('/', (req, res) => {
   const body = req.body;
+
+  if (!body.likes) {
+    body['likes'] = 0;
+  }
 
   const blog = new Blog({
     title: body.title,
-    author: body.author,
+    authors: body.authors,
     url: body.url,
     likes: body.likes
   });
