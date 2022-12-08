@@ -56,6 +56,15 @@ test('"Likes" property defaults to 0 if missing', async () => {
   expect(res.body[res.body.length - 1].likes).toEqual(0);
 });
 
+test('Status 400 is sent when "title" or "url" are missing', async () => {
+  const post = helper.postWithoutTitle;
+
+  await api
+    .post('/api/blogs')
+    .send(post)
+    .expect(400);
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
