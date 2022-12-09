@@ -79,6 +79,19 @@ describe('DELETE method', () => {
   });
 });
 
+test('Succesfully update the information of a post', async () => {
+  const posts = await api.get('/api/blogs');
+  const newLikes = { likes: 56 };
+
+  await api
+    .put(`/api/blogs/${posts.body[0].id}`)
+    .send(newLikes)
+    .expect(200);
+
+  const updatedPosts = await api.get('/api/blogs');
+  expect(updatedPosts.body[0].likes).toEqual(newLikes.likes);
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
