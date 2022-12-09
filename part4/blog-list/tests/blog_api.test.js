@@ -65,6 +65,20 @@ test('Status 400 is sent when "title" or "url" are missing', async () => {
     .expect(400);
 });
 
+describe('DELETE method', () => {
+  test('returns 204 when successful', async () => {
+    const posts = await api.get('/api/blogs');
+
+    await api
+      .delete(`/api/blogs/${posts.body[0].id}`)
+      .expect(204);
+
+    const res = await api.get('/api/blogs');
+
+    expect(res.body).toHaveLength(posts.body.length - 1);
+  });
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
