@@ -18,6 +18,11 @@ usersRouter.post('/', async (req, res) => {
       error: 'Username and password are required'
     });
     return;
+  } else if (username.length <= 3 || password.length <= 3) {
+    res.status(400).json({
+      error: 'Username and password must be at leas 3 characters long'
+    });
+    return;
   } else {
     const passwordHash = await bcrypt.hash(password, 10);
 
