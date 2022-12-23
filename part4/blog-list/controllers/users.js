@@ -23,6 +23,11 @@ usersRouter.post('/', async (req, res) => {
       error: 'Username and password must be at leas 3 characters long'
     });
     return;
+  } else if (usernames.includes(username)) {
+    res.status(400).json({
+      error: `'${username}' already exists`
+    });
+    return;
   } else {
     const passwordHash = await bcrypt.hash(password, 10);
 
