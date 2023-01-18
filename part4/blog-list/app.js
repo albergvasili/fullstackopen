@@ -10,10 +10,11 @@ const middleware = require('./utils/middleware');
 
 mongoose.connect(config.mongoURL);
 
-app.use(middleware.tokenExtractor);
 app.use(cors());
 app.use(express.json());
 
+app.use(middleware.tokenExtractor);
+app.use(middleware.userExtractor);
 
 app.use('/api/blogs', blogRouter);
 app.use('/api/users', usersRouter);
