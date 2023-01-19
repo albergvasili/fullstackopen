@@ -24,6 +24,30 @@ const favoriteBlog = (blogs) => {
   return topBlog;
 };
 
+const mostBlogs = (blogs) => {
+  const authorsList = blogs.map(blog => blog.authors);
+
+  const blogsPerAuthor = authorsList.reduce((x, author) => {
+    const count = x[author] ?? 0;
+    return {
+      ...x,
+      [author]: count + 1
+    };
+  }, 0);
+
+  const blogsAndAuthors = Object.entries(blogsPerAuthor);
+
+  let topAuthor;
+  blogsAndAuthors.reduce((x, author) => {
+    if (author[1] > x) {
+      topAuthor = author;
+    }
+    return topAuthor[1];
+  }, 0);
+
+  return topAuthor[0];
+};
+
 const emptyList = [];
 
 const singleBlogList = [
@@ -112,6 +136,7 @@ module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
+  mostBlogs,
   emptyList,
   singleBlogList,
   multiBlogList,
