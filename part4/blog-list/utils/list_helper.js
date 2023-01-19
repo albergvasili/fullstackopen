@@ -69,6 +69,45 @@ const multiBlogList = [
 
 ];
 
+const longerBlogList = [
+  {
+    title: 'String',
+    authors: 'String',
+    url: 'String',
+    likes: 3
+  },
+  {
+    title: 'Guten tag',
+    authors: 'Tralali',
+    url: 'Line',
+    likes: 7
+  },
+  {
+    title: 'Satori',
+    authors: 'Surprise',
+    url: 'We',
+    likes: 11
+  },
+  {
+    title: 'Chalamanka',
+    authors: 'Surprise',
+    url: 'Yaso',
+    likes: 21
+  },
+  {
+    title: 'COCACACA',
+    authors: 'Tralali',
+    url: 'L',
+    likes: 1
+  },
+  {
+    title: 'JAVAS',
+    authors: 'Tralali',
+    url: 'DOUKIPUDONTAN',
+    likes: 9
+  }
+];
+
 module.exports = {
   dummy,
   totalLikes,
@@ -76,6 +115,7 @@ module.exports = {
   emptyList,
   singleBlogList,
   multiBlogList,
+  longerBlogList,
   postWithoutLikes,
   postWithoutTitle
 };
