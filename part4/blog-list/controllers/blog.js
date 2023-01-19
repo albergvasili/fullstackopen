@@ -13,6 +13,9 @@ blogRouter.post('/', async (req, res) => {
   const body = req.body;
   const user = req.user;
 
+  if (!user) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
   if (!body.likes) {
     body.likes = 0;
   }
@@ -29,8 +32,6 @@ blogRouter.post('/', async (req, res) => {
     user.blogs = user.blogs.concat(savedBlog._id);
     await user.save();
     res.status(201).json(savedBlog);
-
-
   } else {
     res.status(400).end();
   }
