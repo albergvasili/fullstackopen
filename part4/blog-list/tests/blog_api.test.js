@@ -90,6 +90,16 @@ describe('POST method', () => {
       .set('Authorization', `bearer ${token.body.token}`)
       .expect(400);
   });
+
+  test('Creating a post sends 401 if token is not provided', async () => {
+    const post = helper.singleBlogList[0];
+
+    await api
+      .post('/api/blogs')
+      .send(post)
+      .expect(401);
+  });
+
 });
 
 describe('DELETE method', () => {
