@@ -32,3 +32,10 @@ describe('Blog with most likes', () => {
       .toEqual(listHelper.multiBlogList[2]);
   });
 });
+
+describe('Function mostBlogs', () => {
+  test('returns the author with largest amount of blogs', () => {
+    expect(listHelper.mostBlogs(listHelper.longerBlogList))
+      .toBe('Tralali');
+  });
+});
