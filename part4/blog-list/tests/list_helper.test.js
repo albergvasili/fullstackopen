@@ -39,3 +39,10 @@ describe('Function mostBlogs', () => {
       .toBe('Tralali');
   });
 });
+
+describe('Function mostLikes', () => {
+  test('returns the the author with largest amount of likes', () => {
+    expect(listHelper.mostLikes(listHelper.longerBlogList))
+      .toBe('Surprise');
+  });
+});

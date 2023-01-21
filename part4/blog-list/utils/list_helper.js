@@ -48,6 +48,10 @@ const mostBlogs = (blogs) => {
   return topAuthor[0];
 };
 
+const mostLikes = (blogs) => {
+  console.log(blogs);
+};
+
 const emptyList = [];
 
 const singleBlogList = [
@@ -137,6 +141,7 @@ module.exports = {
   totalLikes,
   favoriteBlog,
   mostBlogs,
+  mostLikes,
   emptyList,
   singleBlogList,
   multiBlogList,
