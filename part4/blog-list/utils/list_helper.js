@@ -49,7 +49,30 @@ const mostBlogs = (blogs) => {
 };
 
 const mostLikes = (blogs) => {
-  console.log(blogs);
+  let counts = {};
+
+  const authorsList = blogs.map(
+    ({ likes, authors }) => ({ [authors]: likes })
+  );
+
+  authorsList.forEach(blog => {
+    let author = Object.keys(blog);
+    let likes = Object.values(blog);
+    if (!Object.keys(counts).includes(String(author))) {
+      counts = { ...counts, [String(author)]: Number(likes) };
+    } else {
+      counts[String(author)] += Number(likes);
+    }
+  });
+
+  const topAuthor = Object.entries(counts).reduce((acc, likes) => {
+    if (likes[1] > acc[1]) {
+      acc = likes;
+    }
+    return acc;
+  });
+
+  return topAuthor[0];
 };
 
 const emptyList = [];
